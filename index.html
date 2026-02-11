@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демонстрация типов данных в программировании</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #0fccce;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #0fccce;
+            text-shadow: 0 0 10px rgba(15, 204, 206, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .data-types-section {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #0fccce;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(15, 204, 206, 0.3);
+        }
+        
+        .data-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .data-type-card {
+            background: rgba(30, 40, 60, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid #0fccce;
+        }
+        
+        .data-type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(15, 204, 206, 0.2);
+        }
+        
+        .data-type-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #0fccce;
+        }
+        
+        .data-type-desc {
+            font-size: 0.95rem;
+            color: #b0b0b0;
+            margin-bottom: 15px;
+        }
+        
+        .data-type-example {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #4dffb8;
+            overflow-x: auto;
+        }
+        
+        .program-structure {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .structure-list {
+            margin-left: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .structure-list li {
+            margin-bottom: 10px;
+            color: #b0b0b0;
+        }
+        
+        .demo-section {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+        }
+        
+        .demo-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .demo-btn {
+            background: linear-gradient(to right, #0fccce, #0a9ea0);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .demo-btn:hover {
+            background: linear-gradient(to right, #0a9ea0, #0fccce);
+            box-shadow: 0 0 15px rgba(15, 204, 206, 0.5);
+        }
+        
+        .output {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            min-height: 150px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            color: #e6e6e6;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .output-title {
+            color: #0fccce;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .code-block {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .code-keyword {
+            color: #ff6b9d;
+        }
+        
+        .code-string {
+            color: #4dffb8;
+        }
+        
+        .code-number {
+            color: #ffcc00;
+        }
+        
+        .code-comment {
+            color: #888;
+        }
+        
+        .code-function {
+            color: #0fccce;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .highlight {
+            color: #0fccce;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Демонстрация типов данных</h1>
+            <p class="subtitle">Визуализация всех основных типов данных в JavaScript и правильной структуры программы с примерами использования и интерактивной демонстрацией.</p>
+        </header>
+        
+        <div class="main-content">
+            <section class="data-types-section">
+                <h2 class="section-title">Типы данных в JavaScript</h2>
+                <div class="data-types-grid">
+                    <div class="data-type-card">
+                        <h3 class="data-type-title">Number (Числа)</h3>
+                        <p class="data-type-desc">Целые и дробные числа, а также специальные числовые значения.</p>
+                        <div class="data-type-example">let age = 25;<br>let price = 99.99;<br>let infinity = Infinity;</div>
+                    </div>
+                    
+                    <div class="data-type-card">
+                        <h3 class="data-type-title">String (Строки)</h3>
+                        <p class="data-type-desc">Текст, заключенный в одинарные, двойные или обратные кавычки.</p>
+                        <div class="data-type-example">let name = "Анна";<br>let message = 'Привет!';<br>let template = `Hello ${name}`;</div>
+                    </div>
+                    
+                    <div class="data-type-card">
+                        <h3 class="data-type-title">Boolean (Логический тип)</h3>
+                        <p class="data-type-desc">Принимает только два значения: true (истина) или false (ложь).</p>
+                        <div class="data-type-example">let isActive = true;<br>let isEmpty = false;<br>let result = 5 > 3; // true</div>
+                    </div>
+                    
+                    <div class="data-type-card">
+                        <h3 class="data-type-title">Undefined</h3>
+                        <p class="data-type-desc">Означает, что переменная объявлена, но ей не присвоено значение.</p>
+                        <div class="data-type-example">let undefinedVar;<br>console.log(undefinedVar); // undefined</div>
+                    </div>
+                    
+                    <div class="data-type-card">
+                        <h3 class="data-type-title">Null</h3>
+                        <p class="data-type-desc">Специальное значение, которое означает "ничего", "пусто" или "значение неизвестно".</p>
+                        <div class="data-type-example">let emptyValue = null;<br>let user = null; // пользователь не выбран</div>
+                    </div>
+                    
+                    <div class="data-type-card">
+                        <h3 class="data-type-title">Object (Объекты)</h3>
+                        <p class="data-type-desc">Коллекция пар ключ-значение для хранения сложных структур данных.</p>
+                        <div class="data-type-example">let user = {<br>  name: "Иван",<br>  age: 30,<br>  isAdmin: true<br>};</div>
+                    </div>
+                    
+                    <div class="data-type-card">
+                        <h3 class="data-type-title">Array (Массивы)</h3>
+                        <p class="data-type-desc">Упорядоченная коллекция элементов с числовой индексацией.</p>
+                        <div class="data-type-example">let colors = ["красный", "зеленый", "синий"];<br>let numbers = [1, 2, 3, 4, 5];</div>
+                    </div>
+                    
+                    <div class="data-type-card">
+                        <h3 class="data-type-title">Function (Функции)</h3>
+                        <p class="data-type-desc">Выполняемый блок кода, который можно вызывать многократно.</p>
+                        <div class="data-type-example">function sum(a, b) {<br>  return a + b;<br>}<br>let result = sum(5, 3); // 8</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="program-structure">
+                <h2 class="section-title">Правильная структура программы</h2>
+                <p>Хорошо структурированная программа должна содержать:</p>
+                <ul class="structure-list">
+                    <li>Импорт необходимых модулей (если требуется)</li>
+                    <li>Объявление констант и переменных в начале</li>
+                    <li>Определение функций с четкими названиями</li>
+                    <li>Основную логику программы</li>
+                    <li>Обработку ошибок и исключительных ситуаций</li>
+                    <li>Чистый и читаемый код с комментариями</li>
+                </ul>
+                
+                <div class="code-block">
+                    <span class="code-comment">// 1. Объявление констант</span><br>
+                    <span class="code-keyword">const</span> MAX_USERS = <span class="code-number">100</span>;<br>
+                    <span class="code-keyword">const</span> APP_NAME = <span class="code-string">"DataTypes Demo"</span>;<br><br>
+                    
+                    <span class="code-comment">// 2. Объявление переменных</span><br>
+                    <span class="code-keyword">let</span> userCount = <span class="code-number">0</span>;<br>
+                    <span class="code-keyword">let</span> isAppActive = <span class="code-keyword">true</span>;<br><br>
+                    
+                    <span class="code-comment">// 3. Определение функций</span><br>
+                    <span class="code-keyword">function</span> <span class="code-function">addUser</span>(userName, userAge) {<br>
+                    &nbsp;&nbsp;<span class="code-keyword">if</span> (userCount &lt; MAX_USERS) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">const</span> newUser = {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: userName,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;age: userAge,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id: Date.now()<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;};<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;userCount++;<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> newUser;<br>
+                    &nbsp;&nbsp;} <span class="code-keyword">else</span> {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="code-keyword">return</span> <span class="code-keyword">null</span>;<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    
+                    <span class="code-comment">// 4. Основная логика программы</span><br>
+                    <span class="code-keyword">function</span> <span class="code-function">runApp</span>() {<br>
+                    &nbsp;&nbsp;console.log(<span class="code-string">`Запуск приложения: <span class="code-function">${APP_NAME}</span>`</span>);<br><br>
+                    
+                    &nbsp;&nbsp;<span class="code-comment">// Создание пользователей</span><br>
+                    &nbsp;&nbsp;<span class="code-keyword">const</span> user1 = <span class="code-function">addUser</span>(<span class="code-string">"Алексей"</span>, <span class="code-number">25</span>);<br>
+                    &nbsp;&nbsp;<span class="code-keyword">const</span> user2 = <span class="code-function">addUser</span>(<span class="code-string">"Мария"</span>, <span class="code-number">30</span>);<br><br>
+                    
+                    &nbsp;&nbsp;<span class="code-comment">// Проверка результата</span><br>
+                    &nbsp;&nbsp;<span class="code-keyword">if</span> (user1 &amp;&amp; user2) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;console.log(<span class="code-string">"Пользователи успешно созданы"</span>);<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br><br>
+                    
+                    <span class="code-comment">// 5. Запуск приложения</span><br>
+                    <span class="code-function">runApp</span>();
+                </div>
+            </section>
+        </div>
+        
+        <section class="demo-section">
+            <h2 class="section-title">Интерактивная демонстрация</h2>
+            <p>Нажмите на кнопки ниже, чтобы увидеть примеры различных типов данных в действии:</p>
+            
+            <div class="demo-controls">
+                <button class="demo-btn" onclick="demoNumbers()">Числа (Number)</button>
+                <button class="demo-btn" onclick="demoStrings()">Строки (String)</button>
+                <button class="demo-btn" onclick="demoBooleans()">Логические значения (Boolean)</button>
+                <button class="demo-btn" onclick="demoUndefinedNull()">Undefined & Null</button>
+                <button class="demo-btn" onclick="demoObjects()">Объекты (Object)</button>
+                <button class="demo-btn" onclick="demoArrays()">Массивы (Array)</button>
+                <button class="demo-btn" onclick="demoFunctions()">Функции (Function)</button>
+                <button class="demo-btn" onclick="demoAllTypes()">Все типы данных</button>
+            </div>
+            
+            <div class="output">
+                <div class="output-title">Результат выполнения:</div>
+                <div id="demo-output">Нажмите на любую кнопку, чтобы увидеть результат</div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Демонстрация типов данных в JavaScript &copy; 2023</p>
+            <p>Этот сайт показывает <span class="highlight">все изученные типы данных</span> и <span class="highlight">правильную структуру программы</span>.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Объявление переменных различных типов данных
+        const PI = 3.14159;
+        const APP_VERSION = "1.0.0";
+        
+        let counter = 0;
+        let currentUser = null;
+        let isInitialized = false;
+        
+        // Различные типы данных
+        const numberExamples = {
+            integer: 42,
+            float: 3.14159,
+            negative: -15,
+            scientific: 1.5e3,
+            hex: 0xFF,
+            binary: 0b1010,
+            octal: 0o777,
+            infinity: Infinity,
+            nan: NaN
+        };
+        
+        const stringExamples = {
+            singleQuote: 'Одинарные кавычки',
+            doubleQuote: "Двойные кавычки",
+            backticks: `Шаблонные строки (template literals)`,
+            multiline: `Многострочная
+строка`,
+            interpolation: `Текущая версия: ${APP_VERSION}`
+        };
+        
+        const booleanExamples = {
+            trueValue: true,
+            falseValue: false,
+            comparison1: 10 > 5,
+            comparison2: 10 === "10",
+            logicalAnd: true && false,
+            logicalOr: true || false,
+            logicalNot: !true
+        };
+        
+        const undefinedNullExamples = {
+            undefinedVar: undefined,
+            nullVar: null,
+            declaredButNotAssigned: (() => { let x; return x; })()
+        };
+        
+        const objectExamples = {
+            user: {
+                name: "Иван Петров",
+                age: 30,
+                email: "ivan@example.com",
+                isAdmin: false,
+                address: {
+                    city: "Москва",
+                    street: "Ленина",
+                    house: 15
+                }
+            },
+            book: {
+                title: "JavaScript: Полное руководство",
+                author: "Дэвид Флэнаган",
+                year: 2020,
+                pages: 1096,
+                isAvailable: true
+            }
+        };
+        
+        const arrayExamples = {
+            colors: ["красный", "зеленый", "синий", "желтый", "фиолетовый"],
+            numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            mixed: [42, "текст", true, null, { name: "объект в массиве" }],
+            matrix: [
+                [1, 2, 3],
+                [4, 5, 6],
+                [7, 8, 9]
+            ]
+        };
+        
+        const functionExamples = {
+            sum: function(a, b) { return a + b; },
+            multiply: (a, b) => a * b,
+            greet: function(name) { return `Привет, ${name}!`; },
+            factorial: function(n) {
+                if (n <= 1) return 1;
+                return n * this.factorial(n - 1);
+            }
+        };
+        
+        // Функции для демонстрации
+        function demoNumbers() {
+            let output = "=== ЧИСЛА (Number) ===\n\n";
+            output += "Примеры числовых значений:\n";
+            
+            for (const [key, value] of Object.entries(numberExamples)) {
+                output += `${key}: ${value} (тип: ${typeof value})\n`;
+            }
+            
+            output += "\nМатематические операции:\n";
+            output += `5 + 3 = ${5 + 3}\n`;
+            output += `10 - 4 = ${10 - 4}\n`;
+            output += `6 * 7 = ${6 * 7}\n`;
+            output += `15 / 3 = ${15 / 3}\n`;
+            output += `17 % 5 = ${17 % 5}\n`;
+            output += `2 ** 8 = ${2 ** 8}\n`;
+            
+            document.getElementById("demo-output").innerHTML = `<pre>${output}</pre>`;
+        }
+        
+        function demoStrings() {
+            let output = "=== СТРОКИ (String) ===\n\n";
+            output += "Примеры строковых значений:\n";
+            
+            for (const [key, value] of Object.entries(stringExamples)) {
+                output += `${key}: ${value}\n`;
+            }
+            
+            output += "\nСтроковые операции:\n";
+            output += `"Hello" + " " + "World" = ${"Hello" + " " + "World"}\n`;
+            output += `"JavaScript".length = ${"JavaScript".length}\n`;
+            output += `"JavaScript".toUpperCase() = ${"JavaScript".toUpperCase()}\n`;
+            output += `"JavaScript".slice(0, 4) = ${"JavaScript".slice(0, 4)}\n`;
+            output += `"JavaScript".includes("Script") = ${"JavaScript".includes("Script")}\n`;
+            
+            document.getElementById("demo-output").innerHTML = `<pre>${output}</pre>`;
+        }
+        
+        function demoBooleans() {
+            let output = "=== ЛОГИЧЕСКИЕ ЗНАЧЕНИЯ (Boolean) ===\n\n";
+            output += "Примеры логических значений:\n";
+            
+            for (const [key, value] of Object.entries(booleanExamples)) {
+                output += `${key}: ${value} (тип: ${typeof value})\n`;
+            }
+            
+            output += "\nЛогические операции:\n";
+            output += `true && true = ${true && true}\n`;
+            output += `true && false = ${true && false}\n`;
+            output += `true || false = ${true || false}\n`;
+            output += `false || false = ${false || false}\n`;
+            output += `!true = ${!true}\n`;
+            output += `!false = ${!false}\n`;
+            output += `!!0 = ${!!0} (преобразование к boolean)\n`;
+            output += `!!1 = ${!!1} (преобразование к boolean)\n`;
+            
+            document.getElementById("demo-output").innerHTML = `<pre>${output}</pre>`;
+        }
+        
+        function demoUndefinedNull() {
+            let output = "=== UNDEFINED И NULL ===\n\n";
+            output += "Примеры:\n";
+            
+            for (const [key, value] of Object.entries(undefinedNullExamples)) {
+                output += `${key}: ${value} (тип: ${typeof value})\n`;
+            }
+            
+            output += "\nСравнение:\n";
+            output += `null == undefined: ${null == undefined}\n`;
+            output += `null === undefined: ${null === undefined}\n`;
+            output += `typeof null: ${typeof null}\n`;
+            output += `typeof undefined: ${typeof undefined}\n`;
+            
+            document.getElementById("demo-output").innerHTML = `<pre>${output}</pre>`;
+        }
+        
+        function demoObjects() {
+            let output = "=== ОБЪЕКТЫ (Object) ===\n\n";
+            output += "Пример объекта 'user':\n";
+            output += JSON.stringify(objectExamples.user, null, 2);
+            
+            output += "\n\nДоступ к свойствам объекта:\n";
+            output += `objectExamples.user.name: ${objectExamples.user.name}\n`;
+            output += `objectExamples.user["age"]: ${objectExamples.user["age"]}\n`;
+            output += `objectExamples.user.address.city: ${objectExamples.user.address.city}\n`;
+            
+            output += "\nМетоды объекта:\n";
+            output += `Ключи объекта: ${Object.keys(objectExamples.user)}\n`;
+            output += `Значения объекта: ${Object.values(objectExamples.user)}\n`;
+            output += `Количество свойств: ${Object.keys(objectExamples.user).length}\n`;
+            
+            document.getElementById("demo-output").innerHTML = `<pre>${output}</pre>`;
+        }
+        
+        function demoArrays() {
+            let output = "=== МАССИВЫ (Array) ===\n\n";
+            output += "Пример массива 'colors':\n";
+            output += JSON.stringify(arrayExamples.colors);
+            
+            output += "\n\nДоступ к элементам массива:\n";
+            output += `arrayExamples.colors[0]: ${arrayExamples.colors[0]}\n`;
+            output += `arrayExamples.colors[arrayExamples.colors.length - 1]: ${arrayExamples.colors[arrayExamples.colors.length - 1]}\n`;
+            
+            output += "\nМетоды массива:\n";
+            output += `Длина массива: ${arrayExamples.colors.length}\n`;
+            output += `Добавление элемента: ${arrayExamples.colors.push("оранжевый")} (новая длина)\n`;
+            output += `Удаление последнего элемента: ${arrayExamples.colors.pop()} (удалённый элемент)\n`;
+            output += `Массив после изменений: ${arrayExamples.colors}\n`;
+            
+            output += "\nИтерация по массиву:\n";
+            arrayExamples.colors.forEach((color, index) => {
+                output += `  ${index}: ${color}\n`;
+            });
+            
+            document.getElementById("demo-output").innerHTML = `<pre>${output}</pre>`;
+        }
+        
+        function demoFunctions() {
+            let output = "=== ФУНКЦИИ (Function) ===\n\n";
+            output += "Примеры функций:\n";
+            
+            output += `sum(5, 3): ${functionExamples.sum(5, 3)}\n`;
+            output += `multiply(4, 7): ${functionExamples.multiply(4, 7)}\n`;
+            output += `greet("Анна"): ${functionExamples.greet("Анна")}\n`;
+            output += `factorial(5): ${functionExamples.factorial(5)}\n`;
+            
+            output += "\nОбъявление функций:\n";
+            output += "1. Function Declaration: function name() { ... }\n";
+            output += "2. Function Expression: const name = function() { ... }\n";
+            output += "3. Arrow Function: const name = () => { ... }\n";
+            
+            output += "\nЗамыкания (closures):\n";
+            const createCounter = () => {
+                let count = 0;
+                return () => ++count;
+            };
+            
+            const counterFunc = createCounter();
+            output += `counterFunc(): ${counterFunc()}\n`;
+            output += `counterFunc(): ${counterFunc()}\n`;
+            output += `counterFunc(): ${counterFunc()}\n`;
+            
+            document.getElementById("demo-output").innerHTML = `<pre>${output}</pre>`;
+        }
+        
+        function demoAllTypes() {
+            let output = "=== ВСЕ ТИПЫ ДАННЫХ ===\n\n";
+            
+            output += "1. Number: " + numberExamples.integer + " (тип: " + typeof numberExamples.integer + ")\n";
+            output += "2. String: " + stringExamples.doubleQuote + " (тип: " + typeof stringExamples.doubleQuote + ")\n";
+            output += "3. Boolean: " + booleanExamples.trueValue + " (тип: " + typeof booleanExamples.trueValue + ")\n";
+            output += "4. Undefined: " + undefinedNullExamples.undefinedVar + " (тип: " + typeof undefinedNullExamples.undefinedVar + ")\n";
+            output += "5. Null: " + undefinedNullExamples.nullVar + " (тип: " + typeof undefinedNullExamples.nullVar + ")\n";
+            output += "6. Object: " + JSON.stringify(objectExamples.user).substring(0, 50) + "... (тип: " + typeof objectExamples.user + ")\n";
+            output += "7. Array: " + JSON.stringify(arrayExamples.colors) + " (тип: " + typeof arrayExamples.colors + ")\n";
+            output += "8. Function: " + functionExamples.sum.toString().substring(0, 50) + "... (тип: " + typeof functionExamples.sum + ")\n";
+            
+            output += "\n=== ПРОВЕРКА ТИПОВ ===\n";
+            output += `typeof 42: ${typeof 42}\n`;
+            output += `typeof "текст": ${typeof "текст"}\n`;
+            output += `typeof true: ${typeof true}\n`;
+            output += `typeof undefined: ${typeof undefined}\n`;
+            output += `typeof null: ${typeof null}\n`;
+            output += `typeof {}: ${typeof {}}\n`;
+            output += `typeof []: ${typeof []}\n`;
+            output += `typeof function(){}: ${typeof function(){}}\n`;
+            output += `Array.isArray([]): ${Array.isArray([])}\n`;
+            output += `Array.isArray({}): ${Array.isArray({})}\n`;
+            
+            document.getElementById("demo-output").innerHTML = `<pre>${output}</pre>`;
+        }
+        
+        // Инициализация при загрузке страницы
+        window.onload = function() {
+            console.log("Демонстрация типов данных загружена!");
+            console.log("Используемые константы:", PI, APP_VERSION);
+            console.log("Текущий пользователь:", currentUser);
+            
+            // Пример правильной структуры программы
+            initializeApp();
+        };
+        
+        function initializeApp() {
+            console.log("Инициализация приложения...");
+            isInitialized = true;
+            console.log("Приложение инициализировано:", isInitialized);
+        }
+    </script>
+</body>
+</html>
